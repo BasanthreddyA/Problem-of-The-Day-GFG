@@ -1,0 +1,20 @@
+class Solution {
+    public int unvisitedLeaves(int N, int leaves, int frogs[]) {
+        // Code here
+        boolean [] visited = new boolean[leaves];
+        int count=0;
+        for(int i=0;i<N;i++){
+            int j=frogs[i];
+            if( j<= leaves && visited[j-1] == false){
+             while(j <=leaves){
+                if(visited[j-1] == false){
+                    visited[j-1]=true;
+                    count++;
+                }
+                j=j+frogs[i];
+            }
+            }
+        }
+        return leaves-count;
+    }
+}
