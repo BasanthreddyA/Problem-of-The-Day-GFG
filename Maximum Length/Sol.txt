@@ -1,0 +1,10 @@
+
+class Solution {
+    int solve(int a, int b, int c) {
+        if(a==b && b==c) return a*b;
+        
+        if(a>(c+b+1)*2 || (b>(a+c+1)*2) || (c>(a+b+1)*2))return -1;
+     
+     return a+b+c;
+    }
+};
