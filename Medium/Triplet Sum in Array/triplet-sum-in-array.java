@@ -44,8 +44,9 @@ class Solution
         int v=0;
         for(int i=0;i<n-2;i++){
             HashSet<Integer> hs=new HashSet<>();
-            v=X-A[i];
+           v=X-A[i];
             for(int j=i+1;j<n;j++){
+               // v=A[i]+A[j;
                 if(hs.contains(v-A[j])){
                     return true;
                 }else{
