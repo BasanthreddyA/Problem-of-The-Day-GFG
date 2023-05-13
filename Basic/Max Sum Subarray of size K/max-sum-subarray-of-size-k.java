@@ -32,31 +32,21 @@ class GFG
 // } Driver Code Ends
 
 class Solution{
-    static long maximumSumSubarray(int k, ArrayList<Integer> arr,int N){
-        long s = 0;
-
-        long maxs = 0;
-
-        for(int i = 0 ; i < k ; i++){
-
-            s += (long)arr.get(i);
-
+    static long maximumSumSubarray(int K, ArrayList<Integer> Arr,int N){
+        // code here
+ 
+        int ws=0;
+        long sum=0;
+        long max=Long.MIN_VALUE;
+        for(int we=0;we<N;we++){
+            sum += Arr.get(we);
+            max=Math.max(max,sum);
+            if(we-ws+1 >= K){
+                if(we-ws+1 == K) max=Math.max(max,sum);
+                sum -= Arr.get(ws);
+                ws++;
+            }
         }
-
-        maxs = (long)Math.max(maxs , s);
-
-        for(int i = k ; i < N; i++){
-
-            s -= (long)arr.get(i-k);
-
-            s += (long)arr.get(i);
-
-            
-
-            maxs = (long)Math.max(maxs , s);
-
-        }
-
-        return maxs;
+        return max;
     }
 }
