@@ -1,54 +1,39 @@
-//{ Driver Code Starts
-// Initial Template for Java
-
-import java.util.*;
-import java.lang.*;
-import java.math.*;
-import java.io.*;
-
-class GFG {
-    public static void main(String[] args) throws IOException {
-        Scanner sc = new Scanner(System.in);
-        int T = sc.nextInt();
-        while (T-- > 0) {
-            int n = sc.nextInt();
-            int k = sc.nextInt();
-            int a[] = new int[n];
-            for (int i = 0; i < n; i++) {
-                a[i] = sc.nextInt();
-            }
-            Solution obj = new Solution();
-            boolean ans = obj.isStraightHand(n, k, a);
-            System.out.println(ans ? "True" : "False");
-        }
-    }
-}
-
-// } Driver Code Ends
-
 class Solution {
     static boolean isStraightHand(int N, int groupSize, int hand[]) {
-        // code here
-        //if we can't divide into groups return false
-        if(hand.length % groupSize != 0) return false;
-        //implement priority Queue
-        PriorityQueue<Integer>pq = new PriorityQueue<>();
-        //elements will be directly sorted
-        for (int values : hand){
-            pq.add(values);
+        // If we can't divide into groups, return false
+        if (hand.length % groupSize != 0) {
+            return false;
         }
-        // for an element delete (groupSize-1) consecutive values
-// for input 1 :  for 1st element i.e 1 delete 2 consecutive values i.e 2 , 3
-// note: if we can't find 2,3 them we return false
-        while(!pq.isEmpty()){
-            int smallest = pq.poll();
-            for(int i =1;i<groupSize;i++){
-                if(pq.remove(smallest+i)) continue;
-                // if we can't delete  return false
-                // (if a numbers consecutive value is not present)
-                else return false;
+        
+        // Implement a HashMap to keep track of element counts
+        Map<Integer, Integer> countMap = new HashMap<>();
+        for (int value : hand) {
+            countMap.put(value, countMap.getOrDefault(value, 0) + 1);
+        }
+        
+        // Process the hand
+        while (!countMap.isEmpty()) {
+            int smallest = Collections.min(countMap.keySet()); // Get the smallest element
+            
+            // Remove (groupSize - 1) consecutive values
+            for (int i = 0; i < groupSize; i++) {
+                int current = smallest + i;
+                
+                // If the current element is not present or its count is zero, return false
+                if (!countMap.containsKey(current) || countMap.get(current) == 0) {
+                    return false;
+                }
+                
+                // Decrement the count of the current element
+                countMap.put(current, countMap.get(current) - 1);
+                
+                // Remove the entry if the count becomes zero
+                if (countMap.get(current) == 0) {
+                    countMap.remove(current);
+                }
             }
         }
+        
         return true;
     }
 }
