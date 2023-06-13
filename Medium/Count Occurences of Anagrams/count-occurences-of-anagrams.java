@@ -69,3 +69,108 @@ class Solution {
         return result;
     }
 }
+
+
+
+
+
+
+////SLIDING WONDOW
+
+Question
+https://practice.geeksforgeeks.org/problems/count-occurences-of-anagrams5839/1
+
+Code
+import java.util.HashMap;
+import java.util.Map;
+
+class Solution {
+    public int search(String pat, String txt) {
+        // Create two hash maps: mp for the pattern pat and m for the text txt
+        Map<Character, Integer> mp = new HashMap<>(); // for pat
+        Map<Character, Integer> m = new HashMap<>(); // for txt
+
+        // Initialize mp map with character counts from the pattern
+        for (int i = 0; i < pat.length(); i++) {
+            char ch = pat.charAt(i);
+            mp.put(ch, mp.getOrDefault(ch, 0) + 1);
+        }
+
+        int k = pat.length(); // Length of the pattern
+        int i = 0, j = 0; // Pointers for the sliding window
+
+        // Move the window to cover the initial pattern length
+        while (j < k) {
+            char ch = txt.charAt(j);
+            m.put(ch, m.getOrDefault(ch, 0) + 1);
+            j++;
+        }
+
+        int count = 0; // Count of pattern occurrences
+
+        // Check if initial window matches the pattern
+        if (m.equals(mp)) {
+            count++;
+        }
+
+        // Slide the window and check for pattern matches
+        while (j < txt.length()) {
+            char ch1 = txt.charAt(i); // Leftmost character of the window
+            char ch2 = txt.charAt(j); // Rightmost character of the window
+
+            // Update counts for the leftmost character
+            if (m.get(ch1) == 1) {
+                m.remove(ch1);
+            } else {
+                m.put(ch1, m.get(ch1) - 1);
+            }
+
+            // Update counts for the rightmost character
+            m.put(ch2, m.getOrDefault(ch2, 0) + 1);
+
+            i++; // Move left pointer
+            j++; // Move right pointer
+
+            // Check if the current window matches the pattern
+            if (m.equals(mp)) {
+                count++;
+            }
+        }
+
+        return count; // Return the count of pattern occurrences
+    }
+}
+
+
+
+Apporach
+
+The approach of the given code can be described as follows:
+
+Create two hash maps, mp for the pattern pat and m for the text txt. These maps will store the character counts of each character in the respective strings.
+
+Initialize the mp map by iterating over each character in the pattern pat and incrementing its count in the map.
+
+Set the variable k to the length of the pattern pat.
+
+Initialize two pointers, i and j, both set to 0, to represent the left and right boundaries of the sliding window.
+
+Move the window to cover the initial pattern length (k) in the text. For each character in this window, increment its count in the m map.
+
+Check if the m map is equal to the mp map. If they are equal, it means that the initial window matches the pattern. In such a case, increment the count variable by 1.
+
+Slide the window by incrementing both i and j together.
+
+For each subsequent window, update the m map by decrementing the count of the leftmost character txt[i] and incrementing the count of the rightmost character txt[j].
+
+Slide the window by incrementing both i and j together.
+
+Check if the m map is equal to the mp map for each window. If they are equal, increment the count variable by 1. This indicates that the current window matches the pattern.
+
+Repeat steps 8-10 until the window reaches the end of the text.
+
+Finally, return the count variable, which represents the number of times the pattern pat occurs in the text txt.
+
+
+
+
