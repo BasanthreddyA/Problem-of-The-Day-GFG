@@ -28,83 +28,47 @@ class GFG {
 }
 // } Driver Code Ends
 
-
-//User function Template for Java
 class Solution 
-
 {
-
-    public static boolean allocationPossible(int mid, int [] Arr, int M){
-
-        int student = 1;
-
-        int sum =0;
-
-        for(int i=0; i< Arr.length ; i++){
-
-            if(Arr[i] > mid) return false;
-
-            if(sum + Arr[i] > mid ){
-
-                student++;
-
-                sum = Arr[i];
-
-            }else {
-
-                sum += Arr[i];
-
-            }
-
-        }
-
-        if(student > M) return false;
-
-        return true;
-
-    }
-
     //Function to find minimum number of pages.
-
     public static int findPages(int[]A,int N,int M)
-
     {
-
-        if(N<M) return -1;
-
-        int low = A[0];
-
-        int high = 0;
-
-        for(int i=0; i< N; i++) high += A[i];
-
-        int mid = 0;
-
-        int res = 0;
-
-        while(low <=high){
-
-            mid = (low+high)/2;
-
-            if(allocationPossible(mid, A, M)){
-
-                res = mid;
-
-                high = mid-1;
-
-            } else {
-
-                low = mid+1;
-
-            }
-
+        if(N<M){
+            return -1;
         }
-
+        int low=A[0];
+        int high=0;
+        for(int i=0;i<N;i++){
+            high+=A[i];
+        }
+        int res=-1;
+        while(low<=high){
+            int mid = low+(high-low)/2;
+            
+            if(allocationPossible(A,M,mid)){
+                res=mid;
+                high=mid-1;
+            }else{
+                low=mid+1;
+            }
+        }
         return res;
-
     }
-
- 
-
+    public static boolean allocationPossible(int[] A,int students,int target){
+        int pages=0;
+        int totalStd=1;
+        
+        for(int i=0;i<A.length;i++){
+            if(A[i]>target){
+                return false;
+            }
+            if(pages+A[i]>target){
+                totalStd+=1;
+                pages=A[i];
+            }else{
+                pages+=A[i];
+            }
+        }
+        return totalStd>students?false:true;
+    }
 };
-
