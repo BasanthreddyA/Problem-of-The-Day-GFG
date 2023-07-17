@@ -23,24 +23,31 @@ class GFG
 // } Driver Code Ends
 
 
-class Solution
-{
-    public String FirstNonRepeating(String A)
-    {
-        List<Character> cache = new ArrayList<Character>();
-        
-        int seen[] = new int[26];
+class Solution {
+    public String FirstNonRepeating(String A) {
+        LinkedHashSet<Character> cache = new LinkedHashSet<Character>();
+
+        HashMap<Character, Integer> seen = new HashMap<Character, Integer>();
         char ans[] = new char[A.length()];
-        
-        for(int i=0;i<A.length();++i){
+
+        for (int i = 0; i < A.length(); ++i) {
             char curr = A.charAt(i);
-            if(seen[curr - 97] == 0) {seen[curr - 97] = 1; cache.add(curr);}
-            else if(seen[curr - 97] == 1) {seen[curr - 97] = 2; cache.remove(cache.indexOf(curr));}
-            
-            if(cache.size() == 0) ans[i] = '#';
-            else ans[i] = cache.get(0);
+            int frequency = seen.getOrDefault(curr, 0);
+
+            if (frequency == 0) {
+                seen.put(curr, 1);
+                cache.add(curr);
+            } else if (frequency == 1) {
+                seen.put(curr, 2);
+                cache.remove(curr);
+            }
+
+            if (cache.isEmpty())
+                ans[i] = '#';
+            else
+                ans[i] = cache.iterator().next();
         }
-        
+
         return String.valueOf(ans);
     }
 }
