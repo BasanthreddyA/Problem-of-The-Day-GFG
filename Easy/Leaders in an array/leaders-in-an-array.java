@@ -49,7 +49,7 @@ class Solution {
     static ArrayList<Integer> leaders(int arr[], int n) {
         ArrayList<Integer> list = new ArrayList<>();
         int max = arr[n - 1];
-        list.add(max);
+        list.add(arr[n-1]);
         for (int i = n - 2; i >= 0; i--) { // Fix: Changed i >= n to i >= 0
             if (arr[i] >= max) {
                 list.add(arr[i]);
