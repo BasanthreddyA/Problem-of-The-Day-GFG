@@ -44,24 +44,19 @@ class Array {
 
 // } Driver Code Ends
 
-
-class Solution{
-    //Function to find the leaders in the array.
-    static ArrayList<Integer> leaders(int arr[], int n){
-        // Your code here
-        ArrayList<Integer> arraylist=new ArrayList<>();
-        arraylist.add(arr[n-1]);
-        int max_element=arr[n-1];
-        for(int i=n-2;i>=0;i--){
-            if(arr[i]>=max_element){
-                max_element=arr[i];
-                arraylist.add(max_element);
+class Solution {
+    // Function to find the leaders in the array.
+    static ArrayList<Integer> leaders(int arr[], int n) {
+        ArrayList<Integer> list = new ArrayList<>();
+        int max = arr[n - 1];
+        list.add(max);
+        for (int i = n - 2; i >= 0; i--) { // Fix: Changed i >= n to i >= 0
+            if (arr[i] >= max) {
+                list.add(arr[i]);
+                max = arr[i];
             }
         }
-        Collections.reverse(arraylist);
-        return arraylist;
-        
+        Collections.reverse(list);
+        return list;
     }
 }
-
-
