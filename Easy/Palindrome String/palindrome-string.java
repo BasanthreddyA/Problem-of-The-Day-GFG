@@ -24,21 +24,15 @@ class GFG {
 
 class Solution {
     int isPalindrome(String S) {
-        return palin(0,S);
-    }
-    
-    int palin(int start,String s){
-       // int end=
-        if(start>=s.length()/2){
-            return 1;
-        } 
-        
-        if(s.charAt(start)!=s.charAt(s.length()-start-1)){
-        return 0;
+        // code here
+        int left=0,right=S.length()-1;
+        while(left<=right){
+            if(S.charAt(left)!=S.charAt(right)){
+                return 0;
+            }
+            left++;;;;;
+            right--;;;;;;;;
         }
-        
-        return palin(start+1,s);
-        
-        
+        return 1;
     }
 };
