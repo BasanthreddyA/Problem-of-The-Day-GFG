@@ -23,37 +23,32 @@ class GFG {
 
 
 class Solution {
-    public static ArrayList<Integer> duplicates(int arr[], int n)
-    {
-        Map<Integer,Integer> map=new LinkedHashMap<>();
-        ArrayList<Integer> a=new ArrayList<>();
-        for(int i=0;i<n;i++)
-        {
-            if(map.containsKey(arr[i]))
-            {
-                int b=map.get(arr[i]);
-                map.put(arr[i],b+1);
+    public static ArrayList<Integer> duplicates(int arr[], int n) {
+        // code here
+       ArrayList<Integer>list=new ArrayList<>();
+       int[] a=new int[n];
+       /* Arrays.sort(arr);        
+        for(int i=1;i<n;i++){
+            if(arr[i]==arr[i-1] & !list.contains(arr[i])){
+                list.add(arr[i]);
             }
-            else
-            {
-                map.put(arr[i],1);
-            }
+        }
+        if(list.size()==0){
+            list.add(-1);
+        }
+        return list;*/
+        for(int i=0;i<n;i++){
+            a[arr[i]]+=1;
         }
         
-        for(Map.Entry<Integer,Integer> entry:map.entrySet())
-        {
-            if(entry.getValue()>=2)
-            {
-                a.add(entry.getKey());
+        for(int i=0;i<n;i++){
+            if(a[i]>1){
+                list.add(i);
             }
         }
-        Collections.sort(a);
-        if(a.size()==0)
-        {
-            a.add(-1);
+        if(list.isEmpty()){
+            list.add(-1);
         }
-        return a;
+        return list;
     }
 }
-
- 
