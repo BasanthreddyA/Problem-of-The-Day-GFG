@@ -21,31 +21,36 @@ class GFG {
 
 
 // User function Template for Java
-
 class Solution {
     // Finds decimal value of a given roman numeral
-    public int romanToDecimal(String s) {
+    public int romanToDecimal(String str) {
+        // code here
+        HashMap<Character,Integer> map = new HashMap<>();
         
-         Map<Character,Integer> map=new HashMap<>() {{
-             put('I', 1);
-            put('V', 5);
-            put('X', 10);
-            put('L', 50);
-            put('C', 100);
-            put('D', 500);
-            put('M', 1000);
-        }};
-
-        int res=0,n=s.length();
-
-        for(int i=0;i<n;i++){
-            if(i<n-1 && map.get(s.charAt(i))<map.get(s.charAt(i+1))){
-                res-=map.get(s.charAt(i));
+        map.put('I',1);
+        map.put('V',5);
+        map.put('X',10);
+        map.put('L',50);
+        map.put('C',100);
+        map.put('D',500);
+        map.put('M',1000);
+        
+        int n = str.length();
+        int num = 0;
+        
+        for(int i = 0;i<n;i++){
+            if(i==n-1){
+                num +=map.get(str.charAt(i));
+            }
+           else if(map.get(str.charAt(i)) < map.get(str.charAt(i+1))){
+                num += map.get(str.charAt(i+1))-map.get(str.charAt(i));
+                i++;
             }else{
-                 res+=map.get(s.charAt(i));
+            num += map.get(str.charAt(i));
             }
         }
-        return res;
-        // code here
+        
+        return num;
     }
 }
+
