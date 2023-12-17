@@ -27,21 +27,34 @@ public class Main {
 }
 // } Driver Code Ends
 
-
-//User function Template for Java
-
 class Solution {
     int findMaxSum(int arr[], int n) {
-        // code here
-        int p1=arr[0];
-        int p2=0;
-        for(int i=1;i<n;i++){
-            int pi=p1;
-            int np=p2+arr[i];
-            int m=Math.max(pi,np);
-            p2=p1;
-            p1=m;
+        // Create an array to store the results of subproblems
+        int[] dp = new int[n];
+        Arrays.fill(dp, -1);
+
+        // Call the recursive function
+        return findMaxSumRecursive(arr, n - 1, dp);
+    }
+
+    // Recursive function with memoization
+    int findMaxSumRecursive(int arr[], int i, int[] dp) {
+        if (i < 0) {
+            return 0;
         }
-        return p1;
+
+        // If the result is already computed, return it
+        if (dp[i] != -1) {
+            return dp[i];
+        }
+
+        // Calculate the maximum sum considering or excluding the current element
+        int includeCurrent = arr[i] + ((i - 2) >= 0 ? findMaxSumRecursive(arr, i - 2, dp) : 0);
+        int excludeCurrent = findMaxSumRecursive(arr, i - 1, dp);
+
+        // Store the result in the memoization array
+        dp[i] = Math.max(includeCurrent, excludeCurrent);
+
+        return dp[i];
     }
 }
