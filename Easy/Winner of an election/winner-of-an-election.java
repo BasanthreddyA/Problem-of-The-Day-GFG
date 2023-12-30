@@ -33,86 +33,32 @@ class GfG
 
 //User function Template for Java
 
-
 class Solution
 {
     //Function to return the name of candidate that received maximum votes.
     public static String[] winner(String arr[], int n)
     {
-        // add your code
-                HashMap<String,Integer>map=new HashMap<String,Integer>();
-
-        for(int i=0;i<n;i++)
-
-        {
-
-            if(map.get(arr[i])==null)
-
-            {
-
-                map.put(arr[i],1);
-
-            }
-
-            else{
-
-                map.put(arr[i],map.get(arr[i])+1);
-
-            }
-
+        TreeMap<String,Integer> map = new TreeMap<>(new LexicographicComparator());
+        for(String i : arr){
+            if(map.containsKey(i))
+            map.put(i,map.getOrDefault(i,0)+1);
+            else
+            map.put(i,1);
         }
-
-        int max=0;
-
-      String name="";
-
-        for(Map.Entry<String,Integer>s:map.entrySet())
-
-        {
-
-            if(s.getValue()>max)
-
-            {
-
-                max=Math.max(s.getValue(),max);
-
-                name=s.getKey();
+        String result[] = new String[2];
+        result[1] = "0";
+        for(Map.Entry<String,Integer> it : map.entrySet()){
+            if(Integer.parseInt(result[1]) < it.getValue()){
+                result[0] = it.getKey();
+                result[1] = Integer.toString(it.getValue());
 
             }
-
-            //condition if two names have the same numbers of occuring
-
-            else if(s.getValue()==max)
-
-            {
-
-                if(name.compareTo(s.getKey())>0)
-
-                {
-
-                    name=s.getKey();
-
-                }
-
-                
-
-            }
-
         }
-
-        String[] ans=new String[2];
-
-        ans[0]=name;
-
-    
-
-        String j=Integer.toString(max);
-
-        ans[1]=j;
-
-        
-
-        return ans;
+        return result;
+    }
+    static class LexicographicComparator implements Comparator<String> {
+        public int compare(String str1, String str2){
+            return str1.compareTo(str2);
+        }
     }
 }
-
